@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -16,7 +18,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+/**
+ * @author dev-rna1
+ *
+ */
 public class UT_Phone {
+	final static String TAG="UT_PHONE";
+	
 	
 	
 	/** 현재 내폰안에있는 동영상 정보들을 arraylist- String으로 표현한다.
@@ -122,12 +130,48 @@ public class UT_Phone {
 		{
 			return null;
 		}
+		
+	}
 	
-		
-		
-		
-		
-		
+
+	/**
+	 * @param intent
+	 * @param context
+	 * @return string[2] ,0 = 타이틀 ,1 = 패쓰
+	 *  @auto dev-rna1 
+	 *  @since 2017. 3. 10.
+	 */
+	public static String[] getMusicTitleAndPath(final Intent intent,Context context){
+	   String[] str=new String[2];
+	
+	
+	   ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
+       // 핸드폰의 Local DB 에서 필요한 데이터를 가져 오는 부분
+       Cursor mediaCursor = contentResolver.query(
+               MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,    // from table
+               null,   // select col, col, col
+               null,   // where col=
+               null,   // args
+               null);  // order by
+
+       if (mediaCursor == null) {
+           Log.e(TAG,"Cursor.query Error");
+       } else if (mediaCursor.moveToFirst()){
+           Log.e(TAG, "Media count:"+ mediaCursor.getCount());
+
+           // ColumnIndex 설정
+           int titleIndex = mediaCursor.getColumnIndex(MediaStore.MediaColumns.TITLE);
+           int musicid = mediaCursor.getColumnIndex(String.valueOf(MediaStore.MediaColumns.DATA));
+           // mediaCursor 에서 원하는 데이터를 가져오는 Loop
+               String title  = mediaCursor.getString(titleIndex);
+               String musicpath  = mediaCursor.getString(musicid);
+               str[0]=title;
+               str[1]=musicpath;
+
+			mediaCursor.close();
+	
+       }
+       return str;
 	}
 	
 }

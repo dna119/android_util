@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -31,8 +33,14 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class UT {
+	
+	
+	 	public static boolean mPressFirstBackKey = false;
+	    public static TimerTask local1;
+	    public static Timer timer;
 	
 	/** 이미지 스트링을 받아서 base64비트맵 값으로 리턴
 	 * @param String_img
@@ -338,6 +346,38 @@ public class UT {
 		mat.postRotate(-90);
 		bitmap=Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
 		return bitmap;
+		
+	}
+	
+	/** - 뒤로가기 눌렀을때 종료
+	 * @param context 
+	 * @return 종료 조건이되면 true 반환
+	 *  @auto dev-rna1 
+	 *  @since 2017. 3. 10.
+	 */
+	public static boolean backPress(Context context){
+		
+		if (!mPressFirstBackKey) {
+            Toast.makeText(context, "뒤로 버튼을 한번 더 누르시면 메뉴로갑니다.", Toast.LENGTH_LONG).show();
+            mPressFirstBackKey = true;
+            local1 = new TimerTask() {
+                public void run() {
+                    timer.cancel();
+                    timer = null;
+                    mPressFirstBackKey = false;
+                }
+            };
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+            timer = new Timer();
+            timer.schedule(local1, 2000L);
+            return false;
+        }
+		else{
+			return true;
+		}
 		
 	}
 	

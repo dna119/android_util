@@ -1,6 +1,5 @@
 package co.kr.makeutil.dialog;
 
-import co.kr.makeutil.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import co.kr.makeutil.R;
 
 
 public class WarningPopup extends Dialog implements View.OnClickListener {
@@ -68,22 +68,22 @@ public class WarningPopup extends Dialog implements View.OnClickListener {
 	public void onClick(View view) {
 
 		Log.e("id", "" + view.getId());
-
-		switch (view.getId()) {
-
-		case R.id.btn_identify:
-			dismiss();
-			if (listener != null) {
-				listener.onIdentifyClick();
-				
-			}
-		case R.id.btn_exit:
+		
+		int ids=view.getId();
+		if(ids==R.id.btn_identify){
 			dismiss();
 			if (listener != null) {
 				listener.onIdentifyClick();
 			}
-			break;
+			
 		}
+		else if(ids==R.id.btn_identify){
+			dismiss();
+			if (listener != null) {
+				listener.onIdentifyClick();
+			}
+		}
+			
 	}
 
 	public void setOnClickListener(WarningPopup.OnClickListener listener) {
