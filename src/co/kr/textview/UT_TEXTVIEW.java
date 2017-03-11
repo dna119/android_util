@@ -23,10 +23,10 @@ public class UT_TEXTVIEW {
 	
 		
 	 */
-	public static void TextView(final TextView textview, Context context,String FontName,int text){
+	public static void TextView(final TextView textview, Context context,String FontName,String text){
 		
 		Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/"+FontName);
-		textview.setTextSize(15f);
+		textview.setTextSize(30f);
 		textview.setTextColor(Color.BLACK);
 		textview.setShadowLayer(5f, 0, 0, Color.WHITE);
 		textview.setGravity(Gravity.CENTER);
@@ -46,11 +46,16 @@ public class UT_TEXTVIEW {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 					textview.setTextColor(Color.WHITE);
 					textview.setShadowLayer(9f, 0, 0, Color.BLACK);
+					return true;
 				} else if (e.getAction() == MotionEvent.ACTION_UP) {
 					textview.setTextColor(Color.BLACK);
 					textview.setShadowLayer(7f, 0, 0, Color.WHITE);
+					return false;
 				}
-				return false;
+				else{
+					return false;
+				}
+				
 			}
 		});
 		textview.setText(text);
