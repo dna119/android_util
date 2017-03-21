@@ -2,7 +2,7 @@ package co.kr.activitiy;
 
 import java.util.Calendar;
 
-import co.kr.makeutil.MainActivity;
+import util.permission.UT_Permission;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Window;
 import android.widget.Toast;
+import co.kr.makeutil.MainActivity;
 
 
 // 이 액티비티를 상속받게 되면 뒤로가기 버튼 눌렀을떄 종료가 뜨게된다
@@ -36,8 +37,13 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		UT_Permission.Gps(this);
+		
+		
+		
+		
 		
 	
 	}
@@ -113,6 +119,8 @@ public abstract class BaseActivity extends Activity {
 		bFinalActivity = flag;
 	}
 
+	
+	
 	
 
 	

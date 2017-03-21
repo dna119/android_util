@@ -22,7 +22,7 @@ import android.util.Log;
  * @author dev-rna1
  *
  */
-public class UT_Phone {
+public class UT_STORAGE {
 	final static String TAG="UT_PHONE";
 	
 	
